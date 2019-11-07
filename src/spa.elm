@@ -10,7 +10,8 @@ import Url
 
 
 type Route
-  = Home
+  = Index
+  | Home
   | Profile
   | Reviews String
   | NotFound
@@ -21,11 +22,14 @@ routeParser =
     [ map Home    (s "home")
     , map Profile (s "profile")
     , map Reviews (s "reviews" </> string)
+    , map Index   (s "")
     ]
 
 route2string: Route -> String
 route2string route =
     case route of
+        Index ->
+            "Index"
         Home ->
             "Home"
         Profile ->
@@ -51,7 +55,7 @@ init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
   ( { key = key
     , url = url
-    , route = Home
+    , route = Index
     , data = { name = "Kaito" }
     }, Cmd.none )
 
@@ -102,12 +106,14 @@ subscriptions _ =
 view : Model -> Browser.Document Msg
 view model =
     case model.route of
+        Index ->
+            viewPage model "Index" (div [] [ text "This is Index page!" ])
         Home ->
             viewPage model "Home" (div [] [ text "This is Home page!" ])
         Profile ->
-            viewPage model "Home" (div [] [ text "This is Profile page!" ])
+            viewPage model "Profile" (div [] [ text "This is Profile page!" ])
         Reviews info ->
-            viewPage model "Home" (div [] [ text "This is Reviews page!" ])
+            viewPage model "Reviews" (div [] [ text "This is Reviews page!" ])
         NotFound ->
             { title = "NotFound"
             , body =
