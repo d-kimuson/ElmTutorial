@@ -4333,7 +4333,7 @@ function _Url_percentDecode(string)
 var author$project$Main$UrlChanged = function (a) {
 	return {$: 'UrlChanged', a: a};
 };
-var author$project$Main$Home = {$: 'Home'};
+var author$project$Main$Index = {$: 'Index'};
 var elm$core$Basics$False = {$: 'False'};
 var elm$core$Basics$True = {$: 'True'};
 var elm$core$Result$isOk = function (result) {
@@ -4817,7 +4817,7 @@ var author$project$Main$init = F3(
 			{
 				data: {name: 'Kaito'},
 				key: key,
-				route: author$project$Main$Home,
+				route: author$project$Main$Index,
 				url: url
 			},
 			elm$core$Platform$Cmd$none);
@@ -4828,6 +4828,7 @@ var author$project$Main$subscriptions = function (_n0) {
 	return elm$core$Platform$Sub$none;
 };
 var author$project$Main$NotFound = {$: 'NotFound'};
+var author$project$Main$Home = {$: 'Home'};
 var author$project$Main$Profile = {$: 'Profile'};
 var author$project$Main$Reviews = function (a) {
 	return {$: 'Reviews', a: a};
@@ -5060,7 +5061,11 @@ var author$project$Main$routeParser = elm$url$Url$Parser$oneOf(
 			A2(
 				elm$url$Url$Parser$slash,
 				elm$url$Url$Parser$s('reviews'),
-				elm$url$Url$Parser$string))
+				elm$url$Url$Parser$string)),
+			A2(
+			elm$url$Url$Parser$map,
+			author$project$Main$Index,
+			elm$url$Url$Parser$s(''))
 		]));
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
@@ -6026,6 +6031,8 @@ var author$project$Main$update = F2(
 	});
 var author$project$Main$route2string = function (route) {
 	switch (route.$) {
+		case 'Index':
+			return 'Index';
 		case 'Home':
 			return 'Home';
 		case 'Profile':
@@ -6119,6 +6126,18 @@ var elm$html$Html$p = _VirtualDom_node('p');
 var author$project$Main$view = function (model) {
 	var _n0 = model.route;
 	switch (_n0.$) {
+		case 'Index':
+			return A3(
+				author$project$Main$viewPage,
+				model,
+				'Index',
+				A2(
+					elm$html$Html$div,
+					_List_Nil,
+					_List_fromArray(
+						[
+							elm$html$Html$text('This is Index page!')
+						])));
 		case 'Home':
 			return A3(
 				author$project$Main$viewPage,
@@ -6135,7 +6154,7 @@ var author$project$Main$view = function (model) {
 			return A3(
 				author$project$Main$viewPage,
 				model,
-				'Home',
+				'Profile',
 				A2(
 					elm$html$Html$div,
 					_List_Nil,
@@ -6148,7 +6167,7 @@ var author$project$Main$view = function (model) {
 			return A3(
 				author$project$Main$viewPage,
 				model,
-				'Home',
+				'Reviews',
 				A2(
 					elm$html$Html$div,
 					_List_Nil,
